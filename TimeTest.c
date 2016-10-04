@@ -18,33 +18,38 @@ void TimeTestEnd(TimeTest *timer)
 	int newtcnt;
 	//If called before TimeTestStart leave now
 	// If the tcnt value is zero and no previous count get out
-	if (!((timer->oldtcnt == 0)&&(timer->count == 0))) {
+	if (!((timer->oldtcnt == 0)&&(timer->count == 0))) 
+	{
 		newtcnt = TA1R;
 		timer->count += 1; // increment count
 		newtcnt -= (timer->oldtcnt + TimeTestOffset);
 		timer->totaltime += newtcnt;
-		if (timer->count == 1) { // If first time through
+		if (timer->count == 1)// If first time through
+		{ 
 			timer->min = newtcnt;
 			timer->max = newtcnt;
 			timer->mincount = 1;
 			timer->maxcount = 1;
-			}
-		if( newtcnt < timer->min) { // New minimum
-				timer->min = newtcnt;
-				timer->mincount = 1;
-				}
-		if( newtcnt == timer->min ) {
-				timer->mincount++;} //another at minimum
-		if( newtcnt > timer->max) { // New maximum
-				timer->max = newtcnt;
-				timer->maxcount = 1;
-				}
-		if( newtcnt == timer->max ) {
-				timer->maxcount++; } // another at maximum
+		}
+		if( newtcnt < timer->min) // New minimum
+		{ 
+			timer->min = newtcnt;
+			timer->mincount = 1;
+		}
+		if( newtcnt == timer->min ) 
+			timer->mincount++; //another at minimum
+		if( newtcnt > timer->max) // New maximum
+		{ 
+			timer->max = newtcnt;
+			timer->maxcount = 1;
+		}
+		if( newtcnt == timer->max ) 
+			timer->maxcount++;  // another at maximum
 	}
 }
 
-void timeoutDetect(TimeTest *timer){
+void timeoutDetect(TimeTest *timer)
+{
 	TimeTestEnd(timer);
 	if(timer->totaltime > 40000)
 	{
